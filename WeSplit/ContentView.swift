@@ -8,13 +8,31 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var tapCount = 0
+    let students = ["Harry", "Hermione", "Roy"]
+    @State private var name = ""
+    @State private var selectedStudent = "Harry"
     
     var body: some View {
-        Button("Tap Count: \(tapCount)") {
-            tapCount += 1
+        NavigationStack{
+            // Look at the orientation.
+            Form {
+                Section {
+                    TextField("Enter your name", text: $name)
+                    Text("Hello, \(name)")
+                }
+                
+                Section {
+                    // Loop over view
+                    Picker("Select your student", selection: $selectedStudent) {
+                        ForEach(students, id:\.self) {
+                            Text("\($0)")
+                        }
+                    }
+                }
+            }.navigationTitle("There you go!")
         }
     }
+    
 }
 #Preview {
     ContentView()
